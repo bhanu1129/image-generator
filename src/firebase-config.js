@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage"
+import { getStorage } from "firebase/storage";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -15,7 +15,7 @@ const firebaseConfig = {
   projectId: "ai-img-generator",
   storageBucket: "ai-img-generator.appspot.com",
   messagingSenderId: "791851084167",
-  appId: "1:791851084167:web:58d689572521150cd04b22"
+  appId: "1:791851084167:web:58d689572521150cd04b22",
 };
 
 // Initialize Firebase
