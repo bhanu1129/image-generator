@@ -4,8 +4,10 @@ import { CircularIndeterminate } from "../loadingAnimation";
 import DownloadIcon from '@mui/icons-material/Download';
 import ShareIcon from '@mui/icons-material/Share';
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Auth, db } from "../firebase-config";
+import { Auth, db, storage } from "../firebase-config";
 import { collection, addDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
 
 const Generator = () => {
   const [loading, setLoading] = useState(false);
@@ -16,22 +18,39 @@ const Generator = () => {
   const [user] = useAuthState(Auth);
   const postRef = collection(db, "post");
 
-  
+  const uploadImage = async () => {
+    if(imageFile !== null && prompt !== null){
+      const imageRef = ref(storage, `images/${imageFile.name + v4()}`)
+      uploadBytes(imageRef, imageFile)
+      .then(() => {
+        getDownloadURL(imageRef)
+        .then(url=>{
+          addDoc(postRef, {
+            prompt: prompt,
+            image: url,
+            logo: user.photoURL,
+            user: user.displayName,
+          })
+          alert("posted");
+        })
+      })
+      .catch(err => {console.log(err)})
+    }
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
 
-    const input = event.target.elements.input.value;
     const response = await fetch(
-      "https://api-inference.huggingface.co/models/prompthero/openjourney-v4",
+      "https://api-inference.huggingface.co/models/prompthero/openjourney",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${API_TOKEN}`,
         },
-        body: JSON.stringify({ inputs: input }),
+        body: JSON.stringify({ inputs: prompt }),
       }
     );
 
@@ -41,7 +60,7 @@ const Generator = () => {
 
     const blob = await response.blob();
     setOutput(URL.createObjectURL(blob));
-    setImageFile(new File(blob), "art.png", {type: "image/png"});
+    setImageFile(new File([blob], "art.png", {type: "image/png"}));
     setLoading(false);
   };
 
@@ -81,15 +100,15 @@ const Generator = () => {
       <div>
         {loading && (
           <div className="loading">
-            <CircularIndeterminate />
+            <p><CircularIndeterminate /></p>
           </div>
         )}
         {!loading && output && (
           <div className="result-image">
             <img src={output} alt="art" />
-            <div className="action">
+            <div className="action flex justify-center mt-1">
               <button onClick={downloadImage}><DownloadIcon /></button>
-              <button><ShareIcon /></button>
+              {user && <button onClick={uploadImage}><ShareIcon /></button>}
             </div>
           </div>
         )}
