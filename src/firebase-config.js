@@ -25,4 +25,7 @@ const Auth = getAuth(app);
 const Provider = new GoogleAuthProvider();
 const db = getFirestore(app);
 const storage = getStorage(app);
-export { Auth, Provider, db, storage };
+
+const API_TOKEN = process.env.REACT_APP_API_TOKEN;
+
+export { Auth, Provider, db, storage, API_TOKEN };
