@@ -26,7 +26,7 @@ const Home = () => {
         Imaginate <span>Text-to-Art</span>
       </h1>
       <h3 className="font-semibold text-2xl text-center mt-6 mb-3 text-[#04acfa]">
-        The Community Showcase :
+        The Community Showcase:
       </h3>
       <div className="m-10">
         {loading ? (
