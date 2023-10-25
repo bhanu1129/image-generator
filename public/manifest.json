@@ -1,0 +1,30 @@
+{
+    "name": "Imaginate",
+    "short_name": "Imaginate",
+    "scope": "./",
+    "icons": [
+      {
+        "src": "logo.ico",
+        "sizes": "64x64 32x32 24x24 16x16",
+        "type": "image/x-icon",
+        "purpose": "maskable any"
+      },
+      {
+        "src": "logo1.png",
+        "type": "image/png",
+        "sizes": "192x192",
+        "purpose": "maskable any"
+      },
+      {
+        "src": "logo2.png",
+        "type": "image/png",
+        "sizes": "512x512",
+        "purpose": "maskable any"
+      }
+    ],
+    "start_url": "./",
+    "display": "standalone",
+    "theme_color": "#daedf0",
+    "background_color": "#4786a9"
+  }
+  
