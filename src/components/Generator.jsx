@@ -43,7 +43,7 @@ const Generator = () => {
     setLoading(true);
 
     const response = await fetch(
-      "https://api-inference.huggingface.co/models/prompthero/openjourney",
+      "https://api-inference.huggingface.co/models/prompthero/openjourney-v4",
       {
         method: "POST",
         headers: {
@@ -118,3 +118,7 @@ const Generator = () => {
 };
 
 export default Generator;
+
+
+//xyn-ai/anything-v4.0
+//prompthero/openjourney-v4
